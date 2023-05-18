@@ -6,6 +6,12 @@
       :key="article.id"
       :article="article"
     />
+    <router-link :to="{
+      name: 'ArticleDetail',
+      params: { id: article.id}
+    }">
+      [DETAIL]
+    </router-link>
   </div>
 </template>
 

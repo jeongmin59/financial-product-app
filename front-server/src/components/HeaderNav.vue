@@ -33,28 +33,6 @@
             <li class="nav-item">
               <router-link v-if="isLoggedIn" @click.native="logout" class="nav-link" to="/" style="color:black">로그아웃</router-link>
             </li>
-            <!-- 회원가입 -->
-            <!-- <li class="nav-item">
-              <router-link v-if="!isLoggedIn" class="nav-link text-center" :to="{ name: 'SignUpView' }" style="color:black">회원가입</router-link>
-            </li> -->
-
-          <!-- 로그인 했을 경우 -->
-          <!-- <ul v-if="isLogin" class="navbar-nav">
-            <li class="nav-item-right">
-              <router-link class="nav-link" @click.native="logout" to="#">로그아웃</router-link>
-            </li>
-          </ul> -->
-          <!-- 로그아웃 했을 경우 -->
-          <!-- <ul v-else class="navbar-nav">
-            <li class="nav-item-right">
-              <router-link class="nav-link" :to="{ name: 'Login' }">로그인</router-link>
-            </li>
-          </ul> -->
-
-        <!-- <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-secondary " type="submit">Search</button>
-        </form> -->
           </ul>
         </div>
       </div>
@@ -64,7 +42,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'HeaderNavbar',
@@ -72,23 +50,23 @@ export default {
     logout() {
       this.$store.dispatch('logout')
     },
-    getToken() {
-      const token = localStorage.getItem('jwt')
-      return token
-    },
-    setToken() {
-      const token = localStorage.getItem('jwt')
-      const config = {
-        Authorization: `JWT ${token}`
-      }
-      return config
-    },
+    // getToken() {
+    //   const token = localStorage.getItem('jwt')
+    //   return token
+    // },
+    // setToken() {
+    //   const token = localStorage.getItem('jwt')
+    //   const config = {
+    //     Authorization: `JWT ${token}`
+    //   }
+    //   return config
+    // },
   },
   computed: {
     ...mapActions([
       'checkLogin'
     ]),
-    ...mapState([
+    ...mapGetters([
       'isLogin'
     ])
   },

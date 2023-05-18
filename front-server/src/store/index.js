@@ -27,10 +27,14 @@ export default new Vuex.Store({
     GET_ARTICLES(state, articles) {
       state.articles = articles
     },
-    // signup & login -> 완료하면 토큰 발급
     SAVE_TOKEN(state, token) {
-      state.token = token
-      router.push({name : 'CommunityView'}) // store/index.js $router 접근 불가 -> import를 해야함
+      // state.token = token //token 저장
+      state.token = localStorage.getItem('jwt')
+      state.isLogin = true
+      state.username = token.username
+      console.log(token)
+      router.push({name : 'App'})
+      console.log(this.isLogin)
     }
   },
   actions: {
@@ -53,7 +57,7 @@ export default new Vuex.Store({
       const password2 = payload.password2
 
       axios({
-        method: 'post',
+        method: 'POST',
         url: `${API_URL}/accounts/signup/`,
         data: {
           username, password1, password2
@@ -66,19 +70,21 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
-    login(context, payload) {
+    login({ commit }, payload) {
       const username = payload.username
       const password = payload.password
+      console.log(username)
 
       axios({
-        method: 'post',
+        method: 'POST',
         url: `${API_URL}/accounts/login/`,
         data: {
           username, password
         }
       })
         .then((res) => {
-        context.commit('SAVE_TOKEN', res.data.key)
+          commit('SAVE_TOKEN', res.data.key)
+          console.log(username)
         })
       .catch((err) => console.log(err))
     }

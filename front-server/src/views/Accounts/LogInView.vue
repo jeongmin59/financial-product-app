@@ -10,7 +10,6 @@
 
       <input type="submit" value="logIn">
     </form>
-    <p>도움이 필요하신가요?</p>
       <div>
         금상 회원이 아니신가요?
         <router-link :to="{ name: 'SignUpView'}">회원가입하러 가기</router-link>

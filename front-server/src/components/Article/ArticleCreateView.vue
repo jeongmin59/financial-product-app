@@ -35,20 +35,21 @@ export default {
         alert('내용을 입력해주세요')
         return
       }
+
       axios({
-        method: 'post',
+        method: 'POST',
         url: `${API_URL}/articles/`,
-        data: { title, content},
+        data: { title, content },
         header: {
           Authorization: `Token ${this.$store.state.token}`
         }
       })
-      .then(() => {
-        this.$router.push({name: 'CommunityView'})
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+        .then(() => {
+          this.$router.push({name: 'CommunityView'})
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   }
 }

@@ -2,8 +2,11 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import MainView from '../views/MainView.vue'
 import InterestView from '../views/Financial/InterestView.vue'
+
 import CommunityView from '../views/Community/CommunityView.vue'
 import ArticleCreate from '../components/Article/ArticleCreateView.vue'
+import ArticleDetail from '../components/Article/ArticleDetailView.vue'
+
 import LogInView from '../views/Accounts/LogInView.vue'
 import SignUpView from '../views/Accounts/SignUpView.vue'
 
@@ -31,7 +34,12 @@ const routes = [
     component: ArticleCreate
   },
   {
-    path: 'login',
+    path: '/:id',
+    name: 'ArticleDetail',
+    component: ArticleDetail
+  },
+  {
+    path: '/login',
     name: 'LogInView',
     component: LogInView
   },

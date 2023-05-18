@@ -2,7 +2,7 @@
   <div>
     <h1>Community Page</h1>
     <h3>다양한 정보들을 공유해주세요!</h3>
-    <router-link :to = "'/article_create'">
+    <router-link :to="{ name: 'article_create' }">
       [CREATE]
     </router-link>
     <hr>
