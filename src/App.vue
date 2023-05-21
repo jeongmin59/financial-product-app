@@ -1,28 +1,48 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <header-nav></header-nav>
+    <router-view></router-view>
+    <footer-nav></footer-nav>
   </div>
 </template>
 
+
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HeaderNav from '@/components/HeaderNav.vue'
+import FooterNav from '@/components/FooterNav.vue'
+
+import { mapActions } from 'vuex'
+
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
+  components: { 
+    HeaderNav, FooterNav
+  },
+  computed: {
+    ...mapActions([
+      'checkLogin'
+    ]),
+  },
+  methods: {
+  getToken() {
+    const token = localStorage.getItem('jwt')
+    return token
+  },
+  setToken() {
+    const token = localStorage.getItem('jwt')
+    const config = {
+      Authorization: `JWT ${token}`
+    }
+    return config
+    },
+  },
+  created() {
+    this.$store.dispatch('checkLogin', this.getToken())
+  },
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
