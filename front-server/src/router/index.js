@@ -1,54 +1,31 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import MainView from '../views/MainView.vue'
-import InterestView from '../views/Financial/InterestView.vue'
+import Home from '@/views/Home.vue'
 
-import CommunityView from '../views/Community/CommunityView.vue'
-import ArticleCreate from '../components/Article/ArticleCreateView.vue'
-import ArticleDetail from '../components/Article/ArticleDetailView.vue'
+import Signup from '@/views/accounts/Signup.vue'
+import Login from '@/views/accounts/Login.vue'
 
-import LogInView from '../views/Accounts/LogInView.vue'
-import SignUpView from '../views/Accounts/SignUpView.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'main',
-    component: MainView
+    name: 'Home',
+    component: Home
   },
+  // 회원가입
   {
-    path: '/interest',
-    name: 'interest',
-    component: InterestView
+    path: '/accounts/signup/',
+    name: 'Signup',
+    component: Signup
   },
+  // 로그인
   {
-    path: '/community',
-    name: 'community',
-    component: CommunityView
+    path: '/accounts/login/',
+    name: 'Login',
+    component: Login
   },
-  {
-    path: '/article_create',
-    name: 'ArticleCreate',
-    component: ArticleCreate
-  },
-  {
-    path: '/:id',
-    name: 'ArticleDetail',
-    component: ArticleDetail
-  },
-  {
-    path: '/login',
-    name: 'LogInView',
-    component: LogInView
-  },
-  {
-    path: '/signup',
-    name: 'SignUpView',
-    component: SignUpView
-  },
-
 ]
 
 const router = new VueRouter({
