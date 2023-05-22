@@ -1,29 +1,3 @@
-<<<<<<< HEAD
-# front-server
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-=======
 # Django와 Vue.js를 활용한 금융 상품 비교 애플리케이션
 ### SSAFY 9기 1학기 관통 프로젝트
 - 일시 : 2023.05.17(수) ~ 2023.05.26(금)
