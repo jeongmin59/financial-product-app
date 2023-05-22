@@ -1,4 +1,3 @@
-
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 # Authentication Decorators
@@ -48,18 +47,9 @@ def article_detail(request, article_pk):
             serializer.save()
             return Response(serializer.data)
 
-
-@api_view(['GET'])
-def comment_list(request):
-    if request.method == 'GET':
-        comments = get_list_or_404(Comment)
-        serializer = CommentSerializer(comments, many=True)
-        return Response(serializer.data)
-
-
 @api_view(['GET', 'DELETE', 'PUT'])
-def comment_detail(request, comment_pk):
-    comment = get_object_or_404(Comment, pk=comment_pk)
+def comment_detail(request, article_pk, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk, article__pk=article_pk)
 
     if request.method == 'GET':
         serializer = CommentSerializer(comment)
@@ -75,9 +65,6 @@ def comment_detail(request, comment_pk):
             serializer.save()
             return Response(serializer.data)
 
-    
-
-
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def comment_create(request, article_pk):
@@ -86,3 +73,21 @@ def comment_create(request, article_pk):
     if serializer.is_valid(raise_exception=True):
         serializer.save(article=article, user=request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def comment_like(request, article_pk, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk, article__pk=article_pk)
+    user = request.user
+
+    if comment.liked_by.filter(id=user.id).exists():
+        comment.liked_by.remove(user)
+        comment.like_count -= 1
+        comment.save()
+        return Response({'message': 'Comment unliked successfully.'}, status=status.HTTP_200_OK)
+
+    comment.liked_by.add(user)
+    comment.like_count += 1
+    comment.save()
+
+    return Response({'message': 'Comment liked successfully.'}, status=status.HTTP_200_OK)

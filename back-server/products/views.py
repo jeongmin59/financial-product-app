@@ -63,18 +63,29 @@ def deposit_products(request):
     return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def deposit_products_detail(request, fin_prdt_cd):
     deposit_product = get_object_or_404(DepositProducts, fin_prdt_cd=fin_prdt_cd)
-    serializer = DepositProductsSerializer(deposit_product)
-    data = serializer.data
+    
+    if request.method == 'GET':
+        serializer = DepositProductsSerializer(deposit_product)
+        data = serializer.data
 
-    # 연결된 DepositOptions 직렬화
-    options = DepositOptions.objects.filter(fin_prdt_cd=deposit_product)
-    options_serializer = DepositOptionsSerializer(options, many=True)
-    data['options'] = options_serializer.data
+        # 연결된 DepositOptions 직렬화
+        options = DepositOptions.objects.filter(fin_prdt_cd=deposit_product)
+        options_serializer = DepositOptionsSerializer(options, many=True)
+        data['options'] = options_serializer.data
 
-    return Response(data)
+        return Response(data)
+
+    elif request.method == 'POST':
+        user = request.user
+        user.fin_prdt_cd = deposit_product
+        user.save()
+        # 저장 완료 후 처리할 내용 추가
+        
+        return Response({'message': 'Successfully saved the deposit product.'})
+
 
 @api_view(['GET'])
 def saving_products(request):
@@ -128,15 +139,83 @@ def saving_products(request):
     return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def saving_products_detail(request, fin_prdt_cd):
     saving_product = get_object_or_404(SavingProducts, fin_prdt_cd=fin_prdt_cd)
-    serializer = SavingProductsSerializer(saving_product)
-    data = serializer.data
 
-    # 연결된 SavingOptions 직렬화
-    options = SavingOptions.objects.filter(fin_prdt_cd=saving_product)
-    options_serializer = SavingOptionsSerializer(options, many=True)
-    data['options'] = options_serializer.data
+    if request.method == 'GET':
+        serializer = SavingProductsSerializer(saving_product)
+        data = serializer.data
 
-    return Response(data)
+        # 연결된 SavingOptions 직렬화
+        options = SavingOptions.objects.filter(fin_prdt_cd=saving_product)
+        options_serializer = SavingOptionsSerializer(options, many=True)
+        data['options'] = options_serializer.data
+
+        return Response(data)
+
+    elif request.method == 'POST':
+        user = request.user
+        user.fin_prdt_cd_saving = saving_product
+        user.save()
+        # 저장 완료 후 처리할 내용 추가
+
+        return Response({'message': 'Successfully saved the saving product.'})
+
+
+@api_view(['POST'])
+def recommend_products(request):
+    # 사용자 입력 정보 받기
+    product_type = request.data.get('product_type')
+    amount = request.data.get('amount')
+    duration = request.data.get('duration')
+    preferred_banks = request.data.get('preferred_banks', [])  # 은행명 리스트
+    preferred_condition = request.data.get('preferred_condition')
+
+    # 상품 모델 선택
+    if product_type == '예금':
+        products_model = DepositProducts
+        options_model = DepositOptions
+    elif product_type == '적금':
+        products_model = SavingProducts
+        options_model = SavingOptions
+
+    # 추천 상품 리스트 생성
+    recommendation_list = []
+    products = products_model.objects.all()
+    for product in products:
+        options = options_model.objects.filter(fin_prdt_cd=product, save_trm__gte=duration)
+        if options.exists():
+            if preferred_condition:
+                interest_rate = options.first().intr_rate2
+            else:
+                interest_rate = options.first().intr_rate
+            recommendation_list.append((product, interest_rate))
+
+    # 은행명이 일치하는 경우, 기간이 일치하는 경우를 체크하여 추천 상품 리스트를 생성합니다.
+    filtered_recommendations = []
+    for product, interest_rate in recommendation_list:
+        if not preferred_banks or product.kor_co_nm in preferred_banks:
+            if preferred_condition:
+                options = options_model.objects.filter(fin_prdt_cd=product, save_trm__gte=duration, intr_rate2__gte=interest_rate)
+            else:
+                options = options_model.objects.filter(fin_prdt_cd=product, save_trm__gte=duration, intr_rate__gte=interest_rate)
+            if options.exists():
+                filtered_recommendations.append((product, interest_rate))
+
+    # 이율을 기준으로 추천 리스트를 내림차순 정렬합니다.
+    filtered_recommendations.sort(key=lambda x: x[1], reverse=True)
+
+    # 상위 3개의 상품만 추천 리스트로 선택합니다.
+    top_3_recommendations = filtered_recommendations[:3]
+
+    # JSON 형식으로 변환하여 반환합니다.
+    response_data = {'추천 상품': []}
+    for product, interest_rate in top_3_recommendations:
+        response_data['추천 상품'].append({
+            '은행': product.kor_co_nm,
+            '상품': product.fin_prdt_nm,
+            '이율': interest_rate,
+        })
+
+    return JsonResponse(response_data)
