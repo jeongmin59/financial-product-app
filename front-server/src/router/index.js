@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
 
-import Signup from '@/views/accounts/Signup.vue'
+import SignUp from '@/views/accounts/Signup.vue'
 import Login from '@/views/accounts/Login.vue'
 
 
@@ -17,8 +17,8 @@ const routes = [
   // 회원가입
   {
     path: '/accounts/signup/',
-    name: 'Signup',
-    component: Signup
+    name: 'SignUp',
+    component: SignUp
   },
   // 로그인
   {

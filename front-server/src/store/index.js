@@ -2,53 +2,90 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import axios from 'axios'
-import router from '@/router'
+import createPersistedState from 'vuex-persistedstate'
+// import router from '../router'
 
-const SERVER_URL = 'http://127.0.0.1:8000'
+const API_URL = 'http://127.0.0.1:8000'
 
 Vue.use(Vuex)
 
+
 export default new Vuex.Store({
+  plugins: [
+    createPersistedState(),
+  ],
   state: {
-    isLogin: false,
+    articles: [
+    ],
+    token: null,
   },
   getters: {
+    isLogin(state) {
+      return state.token ? true : false
+    }
   },
   mutations: {
-    // ACCOUNTS MUTATIONS
-    LOGIN(state) {
-      state.isLogin = true
+    GET_ARTICLES(state, articles) {
+      state.articles = articles
     },
-    LOGOUT(state) {
-      state.isLogin = false
-    },
+    // signup & login -> 완료하면 토큰 발급
+    SAVE_TOKEN(state, token) {
+      state.token = token
+      // router.push({name : 'ArticleView'}) // store/index.js $router 접근 불가 -> import를 해야함
+    }
   },
   actions: {
-    // ACCOUNTS ACTIONS
-    login({commit}, credentials) {
+    getArticles(context) {
       axios({
-        method: 'POST',
-        url: `${SERVER_URL}accounts/api-token-auth/`,
-        data: credentials,
+        method: 'get',
+        url: `${API_URL}/articles/`,
+        headers: {
+          Authorization: `Token ${context.state.token}`,
+        }
       })
-      .then(res => {
-        localStorage.setItem('jwt', res.data.token)
-        commit('LOGIN')
-        router.push({name: 'Home'})
+        .then((res) => {
+        // console.log(res, context)
+          context.commit('GET_ARTICLES', res.data)
+        })
+        .catch((err) => {
+        console.log(err)
       })
-      .catch(err => console.log(err))
     },
-    checkLogin({commit}, token) {
-      if (token) {
-        commit('LOGIN')
-      }
-    },
-    logout({commit}) {
-      localStorage.removeItem('jwt')
-      commit('LOGOUT')
-      router.push({ name: 'Login' })
-    },
+    signUp(context, payload) {
+      const username = payload.username
+      const password1 = payload.password1
+      const password2 = payload.password2
 
+      axios({
+        method: 'post',
+        url: `${API_URL}/accounts/signup/`,
+        data: {
+          username, password1, password2
+        }
+      })
+        .then((res) => {
+          context.commit('SAVE_TOKEN', res.data.key)
+        })
+        .catch((err) => {
+        console.log(err)
+      })
+    },
+    login(context, payload) {
+      const username = payload.username
+      const password = payload.password
+
+      axios({
+        method: 'post',
+        url: `${API_URL}/accounts/login/`,
+        data: {
+          username, password
+        }
+      })
+        .then((res) => {
+        context.commit('SAVE_TOKEN', res.data.key)
+        })
+      .catch((err) => console.log(err))
+    }
   },
   modules: {
   }

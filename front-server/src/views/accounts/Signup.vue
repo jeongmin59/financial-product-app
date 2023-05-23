@@ -1,58 +1,45 @@
 <template>
   <div>
-    <div class="authForm">
-      <h2>회원가입</h2>
-        <div class="signupInput">
-          <div>
-            <input class="form-control" id="email" v-model="credentials.email" type="email" placeholder="이메일 주소 또는 전화번호">
-          </div>
-          <div>
-            <input class="form-control" id="username" v-model="credentials.username" type="text" placeholder="아이디">
-          </div>
-          <div>
-            <input class="form-control" id="password" v-model="credentials.password" type="password" placeholder="비밀번호">
-          </div>
-          <div>
-            <input class="form-control" id="passwordConfirmation" v-model="credentials.passwordConfirmation" type="password" placeholder="비밀번호 확인">
-          </div>
-        </div>
-        <button @click="signup" class="btn submitBtn">회원가입</button>
-      </div>
+    <h1>Sign Up Page</h1>
+    <form @submit.prevent="signUp">
+      <label for="username">username : </label>
+      <input type="text" id="username" v-model="username"><br>
+
+      <label for="password1"> password : </label>
+      <input type="password" id="password1" v-model="password1"><br>
+
+      <label for="password2"> password confirmation : </label>
+      <input type="password" id="password2" v-model="password2">
+      
+      <input type="submit" value="SignUp">
+    </form>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
-  name: 'SignupView',
+  name: 'SignUp',
   data() {
     return {
-      credentials: {
-        username: null,
-        password: null,
-        passwordConfirmation: null,
-        email: null,
-      }
+      username: null,
+      password1: null,
+      password2: null,
     }
   },
   methods: {
-    signup() {
-      axios({
-        method: 'POST',
-        url: 'http://127.0.0.1:8000/accounts/signup/',
-        data: this.credentials,
-      })
-      .then(
-        this.$router.push({ name:'Login' })
-      )
-      .catch(
-        err => console.log(err)
-      )
+    signUp() {
+      // console.log('signup')
+      const username = this.username
+      const password1 = this.password1
+      const password2 = this.password2
+
+      const payload = {
+        username, password1, password2
+      }
+
+      this.$store.dispatch('signUp', payload)
+
     }
   }
 }
 </script>
-
-<style>
-</style>
