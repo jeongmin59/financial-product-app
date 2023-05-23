@@ -9,6 +9,7 @@
       <p>내용 : {{ article?.content }}</p>
       <button @click="editArticle">수정</button>
       <button @click="deleteArticle">삭제</button>
+      <CommentListView />
     </div>
 
     <!-- 수정버튼을 누르게 되면 -->
@@ -28,20 +29,19 @@
     <div v-if="isUpdated">
       수정된 글입니다.
     </div>
-    <CommentList />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import CommentList from '@/components/community/CommentList.vue'
+import CommentListView from '@/components/community/CommentList.vue'
 
 const API_URL = 'http://127.0.0.1:8000'
 
 export default {
   name: 'ArticleDetailView',
   components: {
-    CommentList,
+    CommentListView,
   },
   data() {
     return {

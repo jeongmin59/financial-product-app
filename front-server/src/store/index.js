@@ -16,7 +16,7 @@ export default new Vuex.Store({
   ],
   state: {
     articles: [],
-    comments: null,
+    comments: [],
     token: null,
   },
   getters: {
@@ -59,7 +59,7 @@ export default new Vuex.Store({
     getComments(context) {
       axios({
         method: 'GET',
-        url: `${API_URL}/articles/${this.$route.params.id }/comments/`,
+        url: `${API_URL}/articles/${ this.$route.params.id }/comments/`,
         headers: {
           Authorization: `Token ${ context.state.token }`
         }

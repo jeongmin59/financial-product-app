@@ -21,24 +21,24 @@ export default {
       content: null,
     }
   },
+  
   methods: {
     createComment() {
       const content = this.content
 
       if (!content) {
-        alert('내용 입력해주세요')
+        alert('내용을 입력해주세요')
       }
       axios({
         method: 'POST',
-        url: `${API_URL}/articles/${this.$route.params.id }/comments/`,
+        url: `${API_URL}/articles/${this.$route.params.id}/comments/`,
         data: { content, },
         headers: {
           Authorization: `Token ${this.$store.state.token}`
         }
       })
       .then(() => {
-        this.$store.dispatch('getComments')
-        this.$router.push({ name: 'ArticleDetailView', params: { id: this.$route.params.id } })
+        this.$router.push({ name: 'ArticleDetailView' })
       })
       .catch((err) => {
         console.log(err)

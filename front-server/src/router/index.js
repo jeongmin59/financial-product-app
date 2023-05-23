@@ -8,8 +8,13 @@ import LogInView from '@/views/accounts/LogInView'
 import CommunityView from '@/views/community/Community.vue'
 import ArticleCreateView from '@/views/community/ArticleCreate'
 import ArticleDetailView from '@/views/community/ArticleDetail'
-
 import CommentCreateView from '@/components/community/CommentCreate'
+
+import ProductsView from '@/views/products/Products.vue'
+// import ProductsListView from '@/views/products/ProductsList.vue'
+// import ProductsDetail from '@/views/products/ProductsDetail.vue'
+// import SaveProducts from '@/views/products/SaveProducts.vue'
+
 
 Vue.use(VueRouter)
 
@@ -48,10 +53,30 @@ const routes = [
     component: ArticleDetailView,
   },
   {
-    path: '/articles/:id/comment',
+    path: '/articles/:id/comments',
     name: 'CommentCreateView',
     component: CommentCreateView
   },
+  // products
+  {
+    path: '/products',
+    name: 'ProductsView',
+    component: ProductsView
+  },
+  // { 
+  //   path: '/products/deposit-products/', 
+  //   name: 'ProductsListView',
+  //   component: ProductsListView
+  // },
+  // { 
+  //   path: '/products/deposit-products/:fin_prdt_cd', 
+  //   component: ProductsDetail
+  // },
+  // { 
+  //   path: '/products/saving-products/', 
+  //   component: SaveProducts 
+  // },
+
 
 ]
 

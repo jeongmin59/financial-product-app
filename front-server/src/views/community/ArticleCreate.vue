@@ -38,10 +38,10 @@ export default {
       const category = this.category
 
       if (!title) {
-        alert('제목 입력해주세요')
+        alert('제목을 입력해주세요')
         return
       } else if (!content){
-        alert('내용 입력해주세요')
+        alert('내용을 입력해주세요')
         return
       } else if (!category) {
         alert('카테고리를 지정해주세요')

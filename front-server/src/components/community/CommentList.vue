@@ -3,7 +3,7 @@
   <div class="comment-list">
     <h3>댓글 목록</h3>
     <router-link :to="{ name: 'CommentCreateView' }">[댓글 작성]</router-link>
-    <CommentListItem 
+    <CommentListItemView 
     v-for="comment in comments" :key="comment.id" :comment="comment"
     />
     <hr>
@@ -11,12 +11,12 @@
 </template>
 
 <script>
-import CommentListItem from '@/components/community/CommentListItem'
+import CommentListItemView from '@/components/community/CommentListItem'
 
 export default {
-  name: 'CommentList',
+  name: 'CommentListView',
   components: {
-    CommentListItem
+    CommentListItemView,
   },
   computed: {
     comments() {

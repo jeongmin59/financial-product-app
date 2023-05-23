@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'ArticleListItem',
+  name: 'ArticleListItemView',
   props: {
     article: Object,
   }
