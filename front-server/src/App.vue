@@ -1,29 +1,20 @@
 <template>
-  <div id="app">
-    <header-nav></header-nav>
-    <router-view></router-view>
-    <footer-nav></footer-nav>
-  </div>
+ <div class="app">
+  <header-nav></header-nav>
+  <router-view></router-view>
+  <footer-nav></footer-nav>
+ </div>
 </template>
 
-
 <script>
-import HeaderNav from '@/components/HeaderNav.vue'
-import FooterNav from '@/components/FooterNav.vue'
+import HeaderNav from './components/HeaderNav.vue';
+import FooterNav from './components/FooterNav.vue';
 
 export default {
   name: 'App',
   components: { 
-    HeaderNav, FooterNav
+    HeaderNav,
+    FooterNav,
   },
-  computed: {
-  },
-  methods: {
-
-  }
-}
+};
 </script>
-
-<style>
-
-</style>
