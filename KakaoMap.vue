@@ -71,7 +71,7 @@ export default {
                         this.initializeMap();
                     });
                 };
-                script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=KAKAOMAP_API_KEY&libraries=services&autoload=false`;
+                script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=613f7fede859b5ed71f1259496bc432f&libraries=services&autoload=false`;
                 document.head.appendChild(script);
             } else {
                 this.initializeMap();
