@@ -9,7 +9,8 @@
       <p>내용 : {{ article?.content }}</p>
       <button @click="editArticle">수정</button>
       <button @click="deleteArticle">삭제</button>
-      <CommentListView />
+      <CommentListView v-if="article && article.comment_set" 
+      :comments="article.comment_set" />
     </div>
 
     <!-- 수정버튼을 누르게 되면 -->

@@ -1,27 +1,48 @@
 <template>
-    <div>
-        <h2>Maps</h2>
-        <div id="map"></div>
+    <div class="container">
+        <h1>Maps</h1>
+        <div class="form-group">
         <select v-model="selectedBigItem" @change="updateDynamicList">
             <option v-for="item in bigList" :key="item" :value="item">
                 {{ item }}
             </option>
         </select> 
-        <select v-model="selectedDynamicItem" v-if="dynamicList.length > 0" @change="selectDynamicItem">
+        <select v-model="selectedDynamicItem" @change="selectDynamicItem">
             <option v-for="item in dynamicList" :key="item" :value="item">
                 {{ item }}
-            </option>   
+            </option>  
         </select> 
         <select v-model="selectedBankItem" @change="selectBankItem">
             <option v-for="item in bankList" :key="item" :value="item">
                 {{ item }}
             </option>
         </select>
-        <button @click="moveTo">조회</button>
+        <button type='button' class='btn btn-primary' @click="moveTo">조회</button>
+        </div>
+        <div id="map"></div>
     </div>
 </template>
 
 <style scoped>
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+.form-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.form-group select,
+.form-group button {
+    margin: 0 5px;
+}
 #map {
     width: 750px;
     height: 500px;

@@ -18,11 +18,12 @@ export default new Vuex.Store({
     articles: [],
     comments: [],
     token: null,
+    user: null,
   },
   getters: {
     isLogin(state) {
       return state.token ? true : false
-    }
+    },
   },
   mutations: {
     // COMMUNITY
@@ -32,12 +33,13 @@ export default new Vuex.Store({
     GET_COMMENTS(state, comments) {
       state.comments = comments
     },
-    
+
     // signup & login -> 완료하면 토큰 발급
     SAVE_TOKEN(state, token) {
       state.token = token
       router.push({name : 'CommunityView'}) // store/index.js $router 접근 불가 -> import를 해야함
-    }
+    },
+
   },
   actions: {
     getArticles(context) {
@@ -109,7 +111,7 @@ export default new Vuex.Store({
         context.commit('SAVE_TOKEN', res.data.key)
         })
       .catch((err) => console.log(err))
-    }
+    },
   },
   modules: {
   }

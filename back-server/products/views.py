@@ -186,9 +186,9 @@ def recommend_products(request):
     for product in products:
         options = options_model.objects.filter(fin_prdt_cd=product, save_trm__gte=duration)
         if options.exists():
-            if preferred_condition:
+            if preferred_condition == True:
                 interest_rate = options.first().intr_rate2
-            else:
+            elif preferred_condition == False:
                 interest_rate = options.first().intr_rate
             recommendation_list.append((product, interest_rate))
 
@@ -196,9 +196,9 @@ def recommend_products(request):
     filtered_recommendations = []
     for product, interest_rate in recommendation_list:
         if not preferred_banks or product.kor_co_nm in preferred_banks:
-            if preferred_condition:
+            if preferred_condition == True:
                 options = options_model.objects.filter(fin_prdt_cd=product, save_trm__gte=duration, intr_rate2__gte=interest_rate)
-            else:
+            elif preferred_condition == False:
                 options = options_model.objects.filter(fin_prdt_cd=product, save_trm__gte=duration, intr_rate__gte=interest_rate)
             if options.exists():
                 filtered_recommendations.append((product, interest_rate))

@@ -1,19 +1,85 @@
 <template>
-    <div>
-      <h2>환율 계산</h2>
-      <select v-model="selectedCurrency" @change="updateCurrency">
-        <option v-for="currency in countryList" :key="currency.code" :value="currency.code">
-          {{ currency.name }}
-        </option>
-      </select>
-      <input type="number" v-model="koreanWonAmount" @input="calculateExchangeToForeign" placeholder="한국 원 입력">
-      <p v-if="selectedCurrency && conversion_rates">{{ koreanWonAmount }}원은 {{ convertedAmount }} {{ getCurrencyName(selectedCurrency) }}입니다.</p>
-      <input type="number" v-model="foreignAmount" @input="calculateExchangeToWon" placeholder="금액 입력">
-      <p v-if="selectedCurrency && conversion_rates">{{ foreignAmount }} {{ getCurrencyName(selectedCurrency) }}은/는 {{ convertedWon }}원입니다.</p>
+  <div class="container">
+    <div class="center">
+      <h1>환율 계산</h1>
+      <br>
     </div>
-  </template>
-  
-  <script>
+    <div class="row">
+      <h4 class="left">국가 / 화폐를 선택해주세요</h4>
+      <div class="left">
+        <select v-model="selectedCurrency" @change="updateCurrency">
+          <option v-for="currency in countryList" :key="currency.code" :value="currency.code">
+            {{ currency.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="center">
+        <input type="number" v-model="koreanWonAmount" @input="calculateExchangeToForeign" placeholder="한국 원 입력" style="width: 800px;">
+      </div>
+      <div class="right">
+        <p v-if="selectedCurrency && conversion_rates">{{ koreanWonAmount }}원은 {{ convertedAmount }} {{ getCurrencyName(selectedCurrency) }}입니다.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="center">
+        <input type="number" v-model="foreignAmount" @input="calculateExchangeToWon" placeholder="금액 입력" style="width: 800px;">
+      </div>
+      <div class="right">
+        <p v-if="selectedCurrency && conversion_rates">{{ foreignAmount }} {{ getCurrencyName(selectedCurrency) }}은/는 {{ convertedWon }}원입니다.</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  margin: auto;
+  margin-top: 50px;
+  text-align: center;
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  width: 800px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.left {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.center {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.right {
+  text-align: right;
+  margin-bottom: 30px;
+}
+</style>
+
+
+
+
+
+
+
+
+
+<script>
   import axios from "axios";
   
   export default {
@@ -90,5 +156,5 @@
       this.getData();
     },
   };
-  </script>
+</script>
   

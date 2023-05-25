@@ -1,13 +1,13 @@
 <template>
 <div>
-    <h2>상세 상품 정보</h2>
-    <div v-if="product">
-    <h3>{{ product.fin_prdt_nm }}</h3>
-    <!-- 상세 정보 표시 -->
-    </div>
-    <div v-else>
-    <p>상품을 찾을 수 없습니다.</p>
-    </div>
+  <h2>상세 상품 정보</h2>
+  <div v-if="product">
+  <h3>{{ product.fin_prdt_nm }}</h3>
+  <!-- 상세 정보 표시 -->
+  </div>
+  <div v-else>
+  <p>상품을 찾을 수 없습니다.</p>
+  </div>
 </div>
 </template>
 

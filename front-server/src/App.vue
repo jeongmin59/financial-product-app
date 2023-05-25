@@ -18,3 +18,12 @@ export default {
   },
 };
 </script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+#app {
+  font-family: 'Nanum Gothic', sans-serif;
+}
+</style>
+
+C:\Users\SSAFY\Desktop\neww\front-server\public
