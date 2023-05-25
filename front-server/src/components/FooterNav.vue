@@ -1,5 +1,6 @@
 <template>
-<div class="footer">
+<div class="footer bg-light">
+  <hr>
   <div class="copyright px-5 m-2">
     <div class="row">
       <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
@@ -28,5 +29,12 @@ export default {
 </script>
 
 <style>
-
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+.footer {
+  font-family: 'Nanum Gothic', sans-serif;
+  margin: 50px auto;
+}
+:root{
+  background-color: #f8f9fa;
+}
 </style>

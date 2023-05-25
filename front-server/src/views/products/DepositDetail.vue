@@ -1,32 +1,35 @@
 <template>
-<div>
-  <h3 v-if="product">상품명: {{ product.fin_prdt_nm }}</h3>
-  <br>
-  <p v-if="product">은행: {{ product.kor_co_nm }}</p>
-  <br>
-  <p v-if="product">상세 내용: {{ product.etc_note }}</p>
-  <br>
-  <p v-if="product">우대조건: {{ product.spcl_cnd }}</p>
-  <br>
-  <ul v-if="product">
-    <li v-for="option in product.options" 
-    :key="option.id">
-      저축 기간 : {{ option.save_trm }}개월
-      <br>
-      저축 금리 유형 명 : {{ option.intr_rate_type_nm }}
-      <br>
-      적립 유형 명 : {{ option.rsrv_type_nm }}
-      <br>
-      저축 금리 : {{ option.intr_rate }}
-      <br>
-      최대 우대 금리 : {{ option.intr_rate2 }}
-      <br>
-      <br>
-    </li>
-  </ul>
-  <SaveDepositView v-if="product" :fin_prdt_cd="product.fin_prdt_cd"/>
+<div class="deposit-pd">
+    <div class="container">
+    <div v-if="product">
+      <h3 class="header d-flex justify-content-center text-center mt-4">상품명: {{ product.fin_prdt_nm }}</h3>
+      <hr>
+      <p>은행: {{ product.kor_co_nm }}</p>
+      <hr>
+      <p>상세 내용: {{ product.etc_note }}</p>
+      <hr>
+      <p>우대조건: {{ product.spcl_cnd }}</p>
+      <hr>
+      <ul>
+        <li v-for="option in product.options" :key="option.id">
+          <p>저축 기간: {{ option.save_trm }}개월</p>
+          <p>저축 금리 유형 명: {{ option.intr_rate_type_nm }}</p>
+          <p>적립 유형 명: {{ option.rsrv_type_nm }}</p>
+          <p>저축 금리: {{ option.intr_rate }}</p>
+          <p>최대 우대 금리: {{ option.intr_rate2 }}</p>
+          <hr>
+        </li>
+      </ul>
+      <SaveDepositView :fin_prdt_cd="product.fin_prdt_cd" />
+    </div>
+    <div v-else>
+      <p>로딩 중...</p>
+    </div>
+  </div>
 </div>
+
 </template>
+
   
 <script>
 import SaveDepositView from '@/views/products/SaveDeposit.vue'
@@ -76,5 +79,8 @@ export default {
 </script>
 
 <style>
-
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+.deposit-pd {
+  font-family: 'Nanum Gothic', sans-serif;
+}
 </style>

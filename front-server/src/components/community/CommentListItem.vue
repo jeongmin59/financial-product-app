@@ -1,16 +1,15 @@
 <template>
-<!-- 댓글 목록 안 내용들 -->
-  <div>
+  <div class="comment-list">
     <h5>댓글</h5>
-    <div v-for="comment in comments" 
-    :key="comment.id">
-      <p>내용: {{ comment.content }} </p>
-      <p>작성자: {{ comment.username }} </p>
-      <p>좋아요 수: {{ comment.like_count }} </p>
-      <button @click="toggleLike(comment)">
+    <div class="comment-item" v-for="comment in comments" :key="comment.id">
+      <div class="comment-content">
+        <p class="comment-text">내용: {{ comment.content }}</p>
+        <p class="comment-text">작성자: {{ comment.username }}</p>
+        <p class="comment-text">좋아요 수: {{ comment.like_count }}</p>
+      </div>
+      <button class="btn btn-info like-button" @click="toggleLike(comment)">
         {{ comment.liked_by_user ? '좋아요 취소' : '좋아요' }}
-        </button>
-      <br>
+      </button>
     </div>
   </div>
 </template>
@@ -56,10 +55,26 @@ export default {
       });
     }
   }
-
 }
 </script>
 
-<style>
+<style scoped>
+.comment-item {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
 
+.comment-content {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.comment-text {
+  margin-right: 40px;
+}
+
+.like-button {
+  margin-top: 5px;
+}
 </style>

@@ -16,6 +16,7 @@ export default new Vuex.Store({
   ],
   state: {
     articles: [],
+    selectedCategory: '',
     comments: [],
     token: null,
     user: null,
@@ -32,6 +33,13 @@ export default new Vuex.Store({
     },
     GET_COMMENTS(state, comments) {
       state.comments = comments
+    },
+
+    SET_ARTICLES(state, articles) {
+      state.articles = articles
+    },
+    SET_SELECTED_CATEGORY(state, category) {
+      state.selectedCategory = category
     },
 
     // signup & login -> 완료하면 토큰 발급

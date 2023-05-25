@@ -24,6 +24,10 @@
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+.container {
+  font-family: 'Nanum Gothic', sans-serif;
+}
 .container {
     display: flex;
     flex-direction: column;

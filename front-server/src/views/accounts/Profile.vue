@@ -1,9 +1,11 @@
 <template>
-  <div>
-    <h1>{{ userData.username }}의 프로필</h1>
-    <p>입출금 상품: {{ userData.deposit_fin_prdt_nm }}</p>
-    <p>적금 상품: {{ userData.saving_fin_prdt_nm }}</p>
+<div class="profile">
+  <div class="container">
+    <h1 class="header d-flex justify-content-center text-center mt-4">{{ userData.username }}의 프로필</h1>
+    <div class="product d-flex justify-content-center text-center">저장한 예금 상품: {{ userData.deposit_fin_prdt_nm }}</div>
+    <div class="product d-flex justify-content-center text-center">저장한 적금 상품: {{ userData.saving_fin_prdt_nm }}</div>
   </div>
+</div>
 </template>
 
 <script>
@@ -40,6 +42,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+.profile {
+  font-family: 'Nanum Gothic', sans-serif;
+}
 
+.product {
+  margin-top: 20px;
+}
 </style>

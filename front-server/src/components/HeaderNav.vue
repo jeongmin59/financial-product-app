@@ -1,5 +1,5 @@
 <template>
-<div id="app">
+<div class="header">
   <nav class="navbar navbar-expand-lg bg-light">
     <!-- bg-light -->
     <div class="container-fluid">
@@ -66,20 +66,22 @@ export default {
   methods: {
     logout() {
       // 로그아웃 버튼을 클릭하면 실행될 메서드
-      // 토큰을 null로 설정하거나 삭제하는 등의 작업을 수행합니다.
-      this.$store.commit('SAVE_TOKEN', null); // 예시: Vuex를 사용하여 토큰을 관리하는 경우
-      // 다른 로그아웃 관련 작업을 수행할 수도 있습니다.
-      // 예: 로컬 스토리지에서 토큰 삭제 등
-      
-      // 로그아웃 후에 홈페이지 또는 로그인 페이지 등으로 이동할 수 있습니다.
-      // 예: 홈페이지로 이동
-      this.$router.push('/');
+      // 토큰을 null로 설정하거나 삭제하는 등의 작업 수행
+      this.$store.commit('SAVE_TOKEN', null);   // null로 변환
+      this.$router.push('/');     //  home 페이지로 push
     }
   }
 };
 </script>
 
-<style>
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+.header {
+  font-family: 'Nanum Gothic', sans-serif;
+}
+.navbar {
+  background-color: #EBFBFF;
+}
 /* .navbar {
   background-color: #DCEBFF;
 } */
